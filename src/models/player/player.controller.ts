@@ -52,4 +52,47 @@ export class PlayerController {
         return res.json({data: player})
     }
 
+    async update ( req: Request, res: Response ) {
+        const { id } = req.params;
+        const { full_name, player_number, goals } = req.body;
+
+        if (!(full_name || player_number || goals)) {
+            return res.status(422).json({message: "Give full data"});
+        }
+
+        const player = await this.prismaService.player.findUnique({
+            where: { id: Number(id) }
+        })
+
+        if (!player) {
+            return res.status(404).json({message: "Player is not found"})
+        }
+        return res.json({data: player});
+    }
+
+    async delete ( req: Request, res: Response ) {
+        const { id } = req.params;
+
+        if (!id) {
+            return res.status(404).json({message: "Player id is required"})
+        }
+
+        const player = await this.prismaService.player.findUnique({
+            where: {
+                id: Number(id)
+            }
+        })
+
+        if (!player) {
+            return res.status(404).json({message: "Player not found"})
+        }
+
+        await this.prismaService.player.delete({
+            where: {
+                id: Number(id)
+            }
+        })
+
+        return res.json({message: "User deleted successfully"})
+    }
 }

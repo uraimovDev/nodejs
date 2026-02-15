@@ -10,9 +10,9 @@ playerRouter.get('/', (req: Request, res: Response) => playerController.getAll(r
 
 playerRouter.post('/', (req: Request, res: Response) => playerController.create(req, res))
 
-// playerRouter.put('/:id', (req: Request, res: Response) => playerController.update(req, res))
+playerRouter.put('/:id', (req: Request, res: Response) => playerController.update(req, res))
 
-// playerRouter.delete('/:id', (req: Request, res: Response) => playerController.delete(req, res))
+playerRouter.delete('/:id', (req: Request, res: Response) => playerController.delete(req, res))
 
 
 export default playerRouter
